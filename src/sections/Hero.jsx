@@ -6,7 +6,12 @@ import { Leva } from 'leva';
 import { useMediaQuery } from 'react-responsive';
 import { calculateSizes } from '../constants';
 import HeroCamera from '../components/HeroCamera';
+import HackerRoom from '../components/HackerRoom';
 import Target from '../components/Target';
+import ReactLogo from '../components/ReactLogo';
+import Cube from '../components/Cube';
+import Rings from '../components/Rings';
+import Button from '../components/Button';
 
 const Hero = () => {
   // Use media queries to determine screen size
@@ -31,13 +36,35 @@ const Hero = () => {
 
         <Canvas className="w-full h-full">
           <Suspense fallback={<CanvasLoader />}>
-            <PerspectiveCamera makeDefault position={[0, 0, 30]} />
-            <Target position={sizes.targetPosition} />
+            <PerspectiveCamera makeDefault position={[0, 0, 20]} />
+            <HeroCamera isMobile={isMobile}>
+              <HackerRoom
+                scale={sizes.deskScale}
+                position={sizes.deskPosition}
+                rotation={[0.1, -Math.PI, 0]}
+              />
+            </HeroCamera>
+
+            <group>
+              <Target position={sizes.targetPosition} />
+              <ReactLogo position={sizes.reactLogoPosition} />
+              <Cube position={sizes.cubePosition} />
+              <Rings position={sizes.ringPosition} />
+            </group>
 
             <ambientLight intensity={1} />
             <directionalLight position={[10, 10, 10]} intensity={0.5} />
           </Suspense>
         </Canvas>
+      </div>
+      <div className="absolute -bottom-20 left-0 right-0 w-full z-10 c-space ">
+        <a href="#about" className="w-fit">
+          <Button
+            name="Let's Start"
+            isBeam
+            containerClass="sm:w-fit w-full sm:min-w-96"
+          />
+        </a>
       </div>
     </section>
   );
